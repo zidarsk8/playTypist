@@ -64,6 +64,17 @@ object Admin extends Controller with UserTrait {
 
   def disableArticle(id: String) = Action { implicit request =>
   	//TODO: dissable article
+    Redirect(routes.Admin.articleList()).flashing(("message" -> "Article has been dissabled."))
+  }
+  
+  def removeArticle(id: String) = Action { implicit request =>
+    
+    val flash = user map { user => 
+      Corpus.remove(id)
+      ("message" -> "Article Deleted! Corpus is now tiny!")
+    }getOrElse{
+  	  ("error" -> "You can't do that! You're a bad perosn")
+  	}
     Redirect(routes.Admin.articleList()).flashing(flash)
   }
 
