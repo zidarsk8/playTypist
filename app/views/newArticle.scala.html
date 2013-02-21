@@ -3,6 +3,8 @@
 @import play.api.i18n._
 @import views.html.helper._
 
+
+
 @input(field: Field, label: String, fieldType: Symbol = 'text) = {
   <div class="control-group @if(field.hasErrors) {error}">
     <label class="control-label" for="@field.id">@label</label>
@@ -16,20 +18,22 @@
     </div>
   </div>
 }
+      @implicitField = @{ FieldConstructor(CustomFieldConstructor.f) }
 
 @main("Super Simple Sample") {
 
     @form(action = routes.Admin.insertNewArticle, 'class -> "form-horizontal") {
 
       <fieldset>
-        <legend>Registration</legend>
+        <legend>Add new article</legend>
         @* GLOBAL ERROR/FLASH MESSAGE *@
         @articleForm.globalError.map { error => 
           <div class='row'>
             <div class="alert alert-error" style="margin-left:30px;margin-top:20px;">@error.message</div>
           </div>
         }
-        @input(articleForm("text"), "text")
+        
+        @textarea(field = articleForm("text"), args = 'rows -> 5, 'cols -> 50)
         @input(articleForm("author"), "author")
         @input(articleForm("source"), "source")
       </fieldset>

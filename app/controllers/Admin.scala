@@ -36,12 +36,11 @@ object Admin extends Controller with UserTrait {
   }
   
   def insertNewArticle = Action { implicit request =>
-    println("tooooooooooooooooooooo neki ")
     articleForm.bindFromRequest.fold(
       form => BadRequest(views.html.newArticle(form)),
       article => {
         Corpus.create(article)
-        Redirect(routes.Application.index()).flashing("message" -> "Article added!")
+        Redirect(routes.Admin.articleList()).flashing("message" -> "Article added!")
       }
     )
   }
